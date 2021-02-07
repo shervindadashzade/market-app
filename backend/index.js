@@ -1,19 +1,20 @@
-const ENV = require('./env');
+var ENV = require('./env');
+var bodyParser = require('body-parser');
 var express = require('express');
-const User_Services = require('./services/users');
-
+var users_route = require('./routes/users');
+var auth_route = require('./routes/auth');
 // initializing express app
 var app = express();
+
+// body parser for parameters
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
+
 
 app.listen(ENV.PORT,() => {
     console.log('Server Running On Port :',ENV.PORT);
 });
-app.get('/',(req,res)=>{
-    function err(err){
-        res.send(err.message);
-    }
-    function success(){
-        res.send('user added successfully');
-    }
-    User_Services.add_user('shervin22','12345','shervin22@gmail.com',success,err);
-})
+
+
+app.use('/users',users_route);
+app.use('/auth',auth_route);
