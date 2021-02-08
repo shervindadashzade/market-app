@@ -3,12 +3,12 @@ My Attempt for 'System Desing' Semester Project. This Project is an Online Shopp
 Back-End Written in JavaScript Using Nodejs and Express
 Front-End Written in Vuejs Freamwork
 
-## TODO:
+### TODO:
 - [x] add user authentification to back-end
 - [ ] add crud products to back-end
 - [ ] design a logo for app
 - [ ] add user login / register to front-end
 
-## BUGS:
+### BUGS:
 - [ ] delete user have a bug on second request
 
