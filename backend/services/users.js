@@ -2,7 +2,7 @@ const connector = require("../db/connector");
 const UserModel = require("../models/user");
 const {rndString,computeSHA256} = require('../helpers/helper');
 // global users variable
-const users = [];
+var users = [];
 
 
 // laod all users
@@ -14,7 +14,7 @@ var get_users = function(error,acceept){
         }
         if(err) throw err;
         for(user of results){
-            users.push(new UserModel(user.id,user.username,user.email,user.is_admin));
+            users.push(new UserModel(user.id,user.username,user.email,user.api_token,user.is_admin));
         }
         console.log("Users Loaded Successfully");
         acceept();
@@ -54,9 +54,10 @@ var remove_user = function(id,accept,error){
         connection.query(query,function(err,result){
             if(err) throw err;
             accept({'message':'user removed successfully'})
+            users = users.filter((user) => { return user.id!=id })
         })
     }else{
-        err({'message' : 'no user founded with this id'})
+        error({'message' : 'no user founded with this id'})
     }
     connection.end();
 }
