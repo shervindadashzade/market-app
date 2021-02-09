@@ -7,8 +7,8 @@ Front-End Written in Vuejs Freamwork
 - [x] add user authentification to back-end
 - [ ] add crud products to back-end
 - [ ] design a logo for app
-- [ ] add user login / register to front-end
+- [x] add user login / register to front-end
 
 ### BUGS:
-- [ ] delete user have a bug on second request
+- [x] delete user have a bug on second request
 
