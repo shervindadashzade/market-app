@@ -79,7 +79,7 @@ var login_user = function (username,password,accept,error){
             connection.query(query,function(err,res){
                 if(err) throw err;
                 if(res.changedRows > 0){
-                    accept({'api_token':api_token});
+                    accept({'user':target});
                 }else{
                     error({'message' : 'wrong password'})
                 }

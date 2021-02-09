@@ -21,12 +21,13 @@
       </template>
       <v-list width=200>
         <v-list-item>
-          <div class="list-item-text">شما هنوز وارد نشدید</div>
+          <div class="list-item-text">{{ user ? `${user.username} عزیز خوش أمدی` : "شما هنوز وارد نشده اید" }}</div>
         </v-list-item>
         <v-list-item id="bg-list">
             <div class="list-item-text">
-                <v-btn class="ma-2" dark color="error">ثبت نام</v-btn>
-                <v-btn class="ma-2" dark color="primary">ورود</v-btn>
+                <v-btn v-if="user" @click="logout" class="ma-2" dark color="error">خروج</v-btn>  
+                <v-btn v-if="!user" @click="register" class="ma-2" dark color="error">ثبت نام</v-btn>
+                <v-btn v-if="!user" @click="login" class="ma-2" dark color="primary">ورود</v-btn>
             </div>
         </v-list-item>
       </v-list>
@@ -46,7 +47,8 @@
         color="white"
         size="56"
         >?</v-avatar>
-        <div class="drawer-text">کاربر ناشناس</div>
+        <div class="drawer-text">{{ user ? user.username : "کاربر ناشناس" }}</div>
+        <div v-if="user" class="drawer-text">{{ user.email }}</div>
         <div class="drawer-text">موجودی : 0 ریال</div>
     </div>
      
@@ -107,17 +109,34 @@ export default {
         return{
             drawer:false,
             group:null,
+            user : null
         }
+    },
+    mounted(){
+      if(localStorage.user){
+        this.user = JSON.parse(localStorage.user)
+      }
     },
     methods:{
         toggle(){
             this.drawer = true;
+        },
+        login(){
+          this.$router.push('/login');
+        },
+        register(){
+          this.$router.push('/register');
+        },
+        logout(){
+          localStorage.removeItem('user');
+          this.user = null;
+          this.$router.push('/login');
         }
     },
     watch:{
         group(){
             this.drawer = false;
-        }
+        },
     }
 }
 </script>
@@ -141,7 +160,7 @@ export default {
     .drawer-header{
         padding-top: 50px;
         width: 100%;
-        height: 200px;
+        height: 220px;
         text-align: center;
         background: var(--primary-color);
     }

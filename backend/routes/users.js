@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var user_services = require('../services/users');
 var auth_middleware = require('../middlewares/auth');
+
+
+
 router.get('/',(req,res)=>{
     user_services.get_users(()=>{
         res.status(500).json({'error' : 'Internal error'})
@@ -10,6 +13,10 @@ router.get('/',(req,res)=>{
     })
 })
 
+router.post('/me',auth_middleware,(req,res)=>{
+    res.send(req.user);
+});
+
 router.get('/:id',(req,res) => {
     const user = user_services.get_user(req.params.id);
     if(user)
@@ -17,6 +24,7 @@ router.get('/:id',(req,res) => {
     else
         return res.status(400).json({'message' : 'no user founded with this id'});
 })
+
 router.delete('/:id',auth_middleware,(req,res)=>{
     if(req.params.id == req.user.id || req.user.is_admin){
         user_services.remove_user(req.params.id,(log)=>{

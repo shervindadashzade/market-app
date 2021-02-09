@@ -7,6 +7,7 @@
 
 <script>
 import AppBar from './components/AppBar';
+import user_services from './service/user';
 export default {
   name: 'App',
   components:{
@@ -15,6 +16,10 @@ export default {
   data: () => ({
     //
   }),
+  mounted(){
+    user_services.init_user();
+  }
+
 };
 </script>
 

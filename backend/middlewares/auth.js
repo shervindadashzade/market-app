@@ -1,7 +1,9 @@
 var user_services = require('../services/users');
 
 function auth(req,res,next){
+  console.log(req);
   finded = false;
+  console.log(req.body.api_token);
       if(req.body.api_token){
           for(user of user_services.users){
               if(user.api_token == req.body.api_token){
